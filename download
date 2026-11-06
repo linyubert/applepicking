@@ -1,0 +1,23 @@
+# 系統檔
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 編輯器
+.vscode/
+.idea/
+*.swp
+
+# Node / 測試
+node_modules/
+package.json
+package-lock.json
+npm-debug.log*
+
+# Python
+__pycache__/
+*.pyc
+
+# 暫存與截圖
+*.log
+_screens/

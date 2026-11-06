@@ -1,0 +1,213 @@
+/* ===================== 遊戲頁 ===================== */
+#screen-game .hud-left {
+  left: 26px; top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 10;
+}
+.score-badge {
+  min-width: 92px;
+  height: 64px;
+  padding: 0 18px;
+  border-radius: 20px;
+  background: linear-gradient(180deg, #ef4136, #cf221a 60%, #a91510);
+  box-shadow: inset 0 -5px 0 rgba(0, 0, 0, 0.24), inset 0 3px 0 rgba(255, 255, 255, 0.3),
+    0 7px 0 #7d0e08, 0 14px 22px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+}
+.score-badge .icon { font-size: 24px; filter: drop-shadow(0 2px 0 rgba(0, 0, 0, 0.25)); }
+.score-badge .num {
+  font-size: 38px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-shadow: 0 3px 0 rgba(0, 0, 0, 0.28);
+  min-width: 40px;
+  text-align: center;
+}
+.score-badge.bump { animation: bump 0.35s cubic-bezier(0.2, 1.6, 0.4, 1); }
+@keyframes bump {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.16) rotate(-2deg); }
+  100% { transform: scale(1); }
+}
+.combo-pill {
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #ffd94a, #f5a623);
+  color: #7b3d00;
+  font-weight: 900;
+  font-size: 19px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4px 0 #b06c00, 0 8px 14px rgba(0, 0, 0, 0.18);
+  opacity: 0;
+  transform: scale(0.7);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.combo-pill.show { opacity: 1; transform: scale(1); }
+
+#screen-game .hud-right {
+  right: 26px; top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  z-index: 10;
+}
+.hearts { display: flex; gap: 4px; }
+.hearts svg { width: 44px; height: 44px; filter: drop-shadow(0 3px 0 rgba(0, 0, 0, 0.22)); transition: transform 0.2s ease; }
+.hearts svg.lost { opacity: 0.32; filter: grayscale(1); transform: scale(0.86); }
+.hearts svg.pop { animation: heartPop 0.4s ease; }
+@keyframes heartPop {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.4) rotate(-8deg); }
+  100% { transform: scale(1); }
+}
+.hud-btns { display: flex; gap: 8px; }
+.icon-btn {
+  width: 52px; height: 52px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 4px 0 rgba(45, 78, 96, 0.25), 0 8px 14px rgba(0, 0, 0, 0.16);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px;
+  transition: transform 0.1s ease, background 0.15s ease;
+}
+.icon-btn:hover { background: #fff; }
+.icon-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 rgba(45, 78, 96, 0.25); }
+.icon-btn.muted { opacity: 0.55; }
+
+/* 音符欄 */
+.staff-toolbar {
+  right: 30px; bottom: 24px;
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  z-index: 9;
+}
+.staff-toolbar .chip { height: 42px; font-size: 15px; }
+.staff-toolbar .chip:disabled { opacity: 0.45; cursor: default; transform: none; }
+
+.range-pill {
+  left: 100px; bottom: 26px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 800;
+  color: #3c4852;
+  background: rgba(255, 255, 255, 0.86);
+  padding: 8px 16px;
+  border-radius: 999px;
+  box-shadow: 0 4px 0 rgba(45, 78, 96, 0.14);
+  z-index: 9;
+}
+.range-pill b { color: #17813c; letter-spacing: 1px; }
+
+/* 開場提示 */
+.howto {
+  position: absolute;
+  left: 50%;
+  top: 88px;
+  transform: translateX(-50%);
+  padding: 10px 26px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  font-weight: 800;
+  font-size: 18px;
+  color: #45525c;
+  box-shadow: 0 5px 0 rgba(45, 78, 96, 0.14), 0 10px 20px rgba(0, 0, 0, 0.12);
+  z-index: 8;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  white-space: nowrap;
+}
+.howto.gone { opacity: 0; transform: translate(-50%, -14px); pointer-events: none; }
+.howto b { color: #d81f17; }
+
+/* 打擊錯誤時畫面震動 */
+#stage.shake { animation: stageShake 0.4s ease; }
+@keyframes stageShake {
+  0%, 100% { transform: translate(var(--tx, 0), var(--ty, 0)) scale(var(--k, 1)); }
+  20% { transform: translate(calc(var(--tx, 0px) + 9px), var(--ty, 0)) scale(var(--k, 1)); }
+  45% { transform: translate(calc(var(--tx, 0px) - 8px), var(--ty, 0)) scale(var(--k, 1)); }
+  70% { transform: translate(calc(var(--tx, 0px) + 5px), var(--ty, 0)) scale(var(--k, 1)); }
+}
+
+/* 放置區微亮 */
+.drop-cue {
+  opacity: 0;
+  transition: opacity 0.18s ease;
+  pointer-events: none;
+}
+.drop-cue.show { opacity: 1; }
+
+/* 譜上音符 */
+.note-node { animation: notePop 0.32s cubic-bezier(0.2, 1.7, 0.4, 1); transform-box: fill-box; transform-origin: center; }
+@keyframes notePop {
+  0% { transform: scale(0.3) rotate(-14deg); opacity: 0; }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+.note-node.hl .body { filter: brightness(1.35) drop-shadow(0 0 10px #ffe680); }
+
+/* 教學提示（拖曳時顯示線間） */
+/* 拖曳落點預覽層（勿與按鈕樣式 .btn.ghost 撞名） */
+#ghostLayer { pointer-events: none; transition: opacity 0.12s ease; }
+#ghostLayer .ghost-inner { opacity: 0; }
+#ghostLayer.show .ghost-inner { opacity: 1; }
+
+/* 蘋果以 CSS transform 定位（x/y 為本地座標原點） */
+.apple-node {
+  transform-box: view-box;
+  transform-origin: 0 0;
+  transition: transform .34s cubic-bezier(.3,1.35,.4,1);
+  will-change: transform;
+}
+.apple-node.dragging { transition: none !important; }
+.tree-halo { transition: opacity .2s ease; pointer-events: none; }
+.apple-node .pop {
+  animation: applePop .42s cubic-bezier(.2,1.7,.4,1);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+@keyframes applePop {
+  0% { transform: scale(.35) rotate(-16deg); }
+  62% { transform: scale(1.1) rotate(3deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+.note-node { transition: transform .34s cubic-bezier(.3,1.35,.4,1); }
+
+.play-tri {
+  width: 0; height: 0; margin-right: 2px;
+  border-left: 13px solid #2f7a1e;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  display: inline-block;
+}
+.icon-btn svg { display: block; }
+.score-badge .icon { display: flex; align-items: center; }
+.score-badge .icon svg { width: 36px; height: 36px; }
+#progressPill { display: inline-flex; align-items: center; gap: 5px; }
+#progressPill .dot-goal, #progressPill .dot-inf {
+  width: 14px; height: 14px; display: inline-block; background-repeat: no-repeat; background-size: contain;
+}
+
+/* 音域膠囊的顏色提示 */
+.range-pill.reg-low b { color: #2f6fa8; }
+.range-pill.reg-mid b { color: #4a8f26; }
+.range-pill.reg-high b { color: #c07b12; }
+
+.range-pill .reg {
+  font-size: 12px;
+  font-weight: 900;
+  padding: 2px 8px;
+  border-radius: 999px;
+  color: #fff;
+  letter-spacing: 0.5px;
+}
+.range-pill .reg.low { background: linear-gradient(180deg, #4a90c8, #2f6fa8); }
+.range-pill .reg.mid { background: linear-gradient(180deg, #62b04a, #4a8f26); }
+.range-pill .reg.high { background: linear-gradient(180deg, #e0873b, #c07b12); }

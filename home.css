@@ -1,0 +1,217 @@
+/* ===================== 首頁（000） =====================
+   設計空間 1280×960：主角（採蘋果的孩子）× 蘋果樹 為主視覺
+   版面：左上標題／右下 Start＋關於作者（不遮住人物）
+   ==================================================== */
+/* 主視覺插畫（1280×960 等比填滿舞台） */
+#screen-home .home-hero {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+  display: block;
+  z-index: 0;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+/* 左上角柔白暈，讓標題在插畫上也讀得清楚 */
+#screen-home .head::before {
+  content: "";
+  position: absolute;
+  left: -40px; top: -40px;
+  width: 660px; height: 250px;
+  border-radius: 50%;
+  background: radial-gradient(60% 60% at 50% 50%, rgba(255,255,255,0.82), rgba(255,255,255,0) 72%);
+  z-index: -1;
+  pointer-events: none;
+}
+/* 標題置中，壓在主視覺上方（用柔白暈光 + 描邊維持可讀性） */
+#screen-home .head {
+  left: 50%;
+  top: 34px;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: 90%;
+  text-align: center;
+  z-index: 6;
+}
+#screen-home .head::before {
+  content: "";
+  position: absolute;
+  left: 50%; top: -70px;
+  transform: translateX(-50%);
+  width: 760px; height: 330px;
+  border-radius: 50%;
+  background: radial-gradient(50% 50% at 50% 50%, rgba(255,255,255,0.86), rgba(255,255,255,0.5) 48%, rgba(255,255,255,0) 76%);
+  z-index: -1;
+  pointer-events: none;
+}
+#screen-home .head .bubble { font-size: 76px; letter-spacing: 4px; }
+#screen-home .head .sub-en {
+  margin: 6px 0 0;
+  font-size: 20px;
+  letter-spacing: 8px;
+  font-weight: 900;
+  color: #2f4a5e;
+  text-shadow: 0 2px 0 rgba(255, 255, 255, 0.9);
+}
+#screen-home .head .sub {
+  display: inline-block;
+  margin: 12px 0 0;
+  padding: 8px 22px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 3px 0 rgba(45, 78, 96, 0.14);
+  font-size: 18px;
+  font-weight: 900;
+  color: #33546e;
+  text-shadow: none;
+}
+
+/* ---------- Start（縮小、放右下角） ---------- */
+#screen-home .home-actions {
+  left: 0; right: 0; bottom: 96px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  z-index: 7;
+  pointer-events: none;
+}
+#screen-home .home-actions > * { pointer-events: auto; }
+#screen-home .home-goal {
+  margin: 0;
+  padding: 8px 20px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 3px 0 rgba(45, 78, 96, 0.16);
+  font-size: 18px;
+  font-weight: 900;
+  color: #33546e;
+  letter-spacing: 0.5px;
+}
+#screen-home .home-goal b { color: #c8261b; font-size: 22px; }
+#screen-home .home-start {
+  position: relative;
+  width: 226px;
+  height: 76px;
+  box-shadow:
+    0 0 0 6px rgba(255, 255, 255, 0.9),
+    0 10px 0 rgba(143, 18, 12, 0.35),
+    0 18px 28px rgba(20, 42, 55, 0.35);
+  border-radius: 22px;
+  font-size: 31px;
+  letter-spacing: 2px;
+  flex-direction: row;
+  gap: 0;
+}
+#screen-home .home-start .sub-en {
+  display: inline-block;
+  font-size: 12px;
+  letter-spacing: 2.5px;
+  margin: 0 0 0 10px;
+  font-weight: 800;
+  opacity: 0.92;
+}
+#screen-home .home-start::after {   /* 小蘋果圖示 */
+  content: "";
+  width: 30px; height: 30px;
+  margin-left: 6px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-62 -70 124 128'%3E%3Cpath d='M 0,-27 C 9,-41 28,-45 41,-37 C 54,-29 58,-11 57,5 C 56,29 41,48 21,49 C 10,49.5 4,45 0,45 C -4,45 -10,49.5 -21,49 C -41,48 -56,29 -57,5 C -58,-11 -54,-29 -41,-37 C -28,-45 -9,-41 0,-27 Z' fill='%23ffffff' opacity='0.94' stroke='%238f120c' stroke-width='5'/%3E%3Cpath d='M -4,-30 C -9,-44 -13,-54 -8,-61' fill='none' stroke='%23ffffff' stroke-width='10' stroke-linecap='round' opacity='0.9'/%3E%3Cpath d='M -7,-54 C 3,-70 24,-74 34,-63 C 29,-47 8,-44 -7,-54 Z' fill='%23ffffff' opacity='0.94' stroke='%238f120c' stroke-width='4'/%3E%3C/svg%3E");
+}
+
+/* ---------- 關於作者（左下角，小尺寸） ---------- */
+#screen-home .about {
+  left: 34px; bottom: 26px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 8;
+}
+#screen-home .about-links {
+  display: flex;
+  gap: 8px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 4px 0 rgba(45, 78, 96, 0.16), 0 8px 16px rgba(20, 42, 55, 0.12);
+}
+#screen-home .about-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 40px;
+  padding: 0 14px;
+  border-radius: 999px;
+  font-size: 16px;
+  font-weight: 900;
+  color: #2f4a5e;
+  text-decoration: none;
+  background: #eef6fb;
+  border: 2px solid rgba(47, 74, 94, 0.16);
+  transition: transform 0.1s ease, background 0.15s ease;
+}
+#screen-home .about-links a:hover { background: #dcecf7; }
+#screen-home .about-links a:active { transform: translateY(2px); }
+#screen-home .about-links svg { width: 20px; height: 20px; flex: 0 0 auto; }
+#screen-home .about-btn {
+  height: 54px;
+  padding: 0 20px;
+  border-radius: 999px;
+  font-size: 18px;
+  font-weight: 900;
+  color: #33546e;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 5px 0 rgba(45, 78, 96, 0.2), 0 10px 18px rgba(20, 42, 55, 0.16);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+#screen-home .about-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 rgba(45, 78, 96, 0.2); }
+#screen-home .about-btn svg { width: 24px; height: 24px; }
+
+/* ---------- 首頁動畫 ---------- */
+#screen-home .kid {
+  transform-box: view-box;
+  transform-origin: 520px 900px;
+  animation: kidBob 3.2s ease-in-out infinite;
+}
+@keyframes kidBob {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -7px; }
+}
+#screen-home .tree-apple {
+  animation: appleSway 3.6s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+@keyframes appleSway {
+  0%, 100% { translate: 0 0; rotate: 0deg; }
+  50% { translate: 0 -6px; rotate: 2.5deg; }
+}
+#screen-home .air-apple {
+  transform-box: view-box;
+  transform-origin: 372px 436px;
+  animation: airFloat 2.8s ease-in-out infinite;
+}
+@keyframes airFloat {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -12px; }
+}
+#screen-home .spark { animation: sparkTwinkle 2.4s ease-in-out infinite; transform-box: view-box; transform-origin: 384px 440px; }
+@keyframes sparkTwinkle {
+  0%, 100% { opacity: 0.35; scale: 0.9; }
+  50% { opacity: 1; scale: 1.08; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #screen-home .kid, #screen-home .tree-apple, #screen-home .air-apple, #screen-home .spark { animation: none; }
+}
+
+/* ---------- 窄螢幕 ---------- */
+@media (max-width: 700px) {
+  #screen-home .about-links { display: none; }
+}

@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<title>蘋果五線譜 Apple Picking — 拖曳認譜遊戲</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#7fc2dd">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-62 -70 124 128'%3E%3Cpath d='M 0,-27 C 9,-41 28,-45 41,-37 C 54,-29 58,-11 57,5 C 56,29 41,48 21,49 C 10,49.5 4,45 0,45 C -4,45 -10,49.5 -21,49 C -41,48 -56,29 -57,5 C -58,-11 -54,-29 -41,-37 C -28,-45 -9,-41 0,-27 Z' fill='%23e02b25' stroke='%238f120c' stroke-width='5'/%3E%3Cpath d='M -4,-30 C -9,-44 -13,-54 -8,-61' fill='none' stroke='%236d4525' stroke-width='9' stroke-linecap='round'/%3E%3Cpath d='M -7,-54 C 3,-70 24,-74 34,-63 C 29,-47 8,-44 -7,-54 Z' fill='%2343a94a' stroke='%232d7d34' stroke-width='3'/%3E%3C/svg%3E">
+<meta property="og:title" content="蘋果五線譜 Apple Picking — 拖曳認譜遊戲">
+<meta property="og:description" content="小紅帽與大野狼陪你練認譜：拖曳蘋果到五線譜正確位置，摘滿 10 顆過關。">
+<meta property="og:image" content="assets/home-hero.jpg">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="src/css/base.css">
+<link rel="stylesheet" href="src/css/home.css">
+<link rel="stylesheet" href="src/css/setup.css">
+<link rel="stylesheet" href="src/css/game.css">
+</head>
+<body>
+<div id="viewport">
+  <!-- 首頁用：以插畫邊緣的顏色延伸，補滿舞台外的留白 -->
+  <div id="homeBleed" aria-hidden="true"></div>
+  <div id="stage">
+
+    <!-- ==================== 000 首頁 ==================== -->
+    <section id="screen-home" class="screen active" aria-label="首頁">
+      <img class="home-hero" id="homeHero" src="assets/home-hero.jpg" alt="小紅帽拿著蘋果籃，旁邊是大野狼">
+      <svg class="bg-svg" id="homeBg" viewBox="0 0 1280 960" aria-hidden="true"></svg>
+
+      <div class="ui head">
+        <h1 class="bubble">蘋果五線譜</h1>
+        <p class="sub-en">APPLE PICKING</p>
+        <p class="sub">先挑選要練的音域　·　再開始拖曳認譜</p>
+      </div>
+
+      <div class="ui home-actions">
+        <button class="btn home-start" id="btnHomeStart" type="button">開始玩<span class="sub-en">START</span></button>
+        <p class="home-goal">摘滿 <b>10</b> 顆蘋果就過關</p>
+      </div>
+
+      <div class="ui about">
+        <div class="about-links">
+          <a id="linkThreads" href="https://www.threads.com/@lycbert" target="_blank" rel="noopener noreferrer" title="作者 Threads：@lycbert">
+            <span class="ic"></span>@lycbert
+          </a>
+          <a id="linkYoutube" href="https://www.youtube.com/@datoemusic" target="_blank" rel="noopener noreferrer" title="作者 YouTube：@datoemusic">
+            <span class="ic"></span>@datoemusic
+          </a>
+        </div>
+        <button class="about-btn" id="btnAbout" type="button">關於作者</button>
+      </div>
+    </section>
+
+    <!-- ==================== 001 設定頁 ==================== -->
+    <section id="screen-setup" class="screen" aria-label="設定">
+      <svg class="bg-svg" id="setupBg" viewBox="0 0 1280 960" preserveAspectRatio="xMidYMid slice"></svg>
+      <svg class="bg-svg" id="setupStaff" viewBox="0 0 1280 960" aria-label="五線譜"></svg>
+      <svg class="bg-svg" id="setupApples" viewBox="0 0 1280 960" aria-label="音域蘋果"></svg>
+
+      <button class="ui home-back" id="btnHomeBack" type="button" title="回首頁" aria-label="回首頁">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 11.2 12 4.6l8 6.6"/><path d="M6.4 10.2V19h11.2v-8.8"/><path d="M10.2 19v-4.6h3.6V19"/>
+        </svg>
+      </button>
+
+      <div class="ui head">
+        <h1 class="bubble">點蘋果，選出要練的音</h1>
+        <p class="sub">按一下蘋果切換該音　·　再按「開始」進入遊戲</p>
+      </div>
+
+      <div class="ui range-badge" id="rangeBadge"></div>
+      <div class="ui setup-flash" id="setupFlash" aria-live="polite"></div>
+
+      <button class="ui home-jump" id="btnHomeJump" type="button" title="回首頁" aria-label="回首頁">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 11.2 12 4.6l8 6.6"/><path d="M6.4 10.2V19h11.2v-8.8"/><path d="M10.2 19v-4.6h3.6V19"/>
+        </svg>
+      </button>
+
+      <div class="ui setup-panel">
+        <div class="panel-head">
+          <span class="panel-title">出題設定</span>
+        </div>
+        <div class="opt-rows" id="optionsRow"></div>
+      </div>
+
+      <div class="ui start-card">
+        <div class="panel-head">
+          <span class="panel-title">譜號與開始</span>
+        </div>
+        <div class="clef-row" id="clefRow"></div>
+        <button class="btn start-btn" id="btnStart" type="button">開始!<span class="sub-en">START</span><span class="start-range" id="startRange"></span></button>
+        <div class="minor-row wrap">
+          <button class="minor-btn" id="btnHelp" type="button">怎麼玩？</button>
+          <button class="minor-btn" id="btnReset" type="button">↺ 重設</button>
+          <button class="minor-btn paint-btn" id="btnPaint" type="button">連續刷選</button>
+        </div>
+      </div>
+
+      <div class="ui foot">蘋果五線譜・拖曳認譜練習　|　靈感來源：Dr. Musik “Apple Picking”</div>
+    </section>
+
+    <!-- ==================== 01 遊戲頁 ==================== -->
+    <section id="screen-game" class="screen" aria-label="遊戲">
+      <svg class="bg-svg" id="gameBg" viewBox="0 0 1280 960"></svg>
+      <svg class="bg-svg" id="gameStaff" viewBox="0 0 1280 960" aria-label="五線譜"></svg>
+      <svg class="bg-svg" id="gameNotes" viewBox="0 0 1280 960" aria-hidden="true"></svg>
+      <svg class="bg-svg" id="gameDrag" viewBox="0 0 1280 960" aria-hidden="true" style="pointer-events:none"></svg>
+
+      <div class="ui hud-left">
+        <div class="score-badge" id="scoreBadge"><span class="icon" id="scoreIcon"></span><span class="num" id="scoreNum">0</span></div>
+        <div class="combo-pill" id="comboPill">連對 ×2</div>
+      </div>
+
+      <div class="ui hud-right">
+        <div class="hearts" id="hearts"></div>
+        <div class="hud-btns">
+          <button class="icon-btn" id="btnSound" type="button" title="音效開關"></button>
+          <button class="icon-btn" id="btnHint" type="button" title="提示：拖曳時顯示位置音名"></button>
+          <button class="icon-btn" id="btnReplay" type="button" title="重玩"></button>
+          <button class="icon-btn" id="btnBack" type="button" title="回設定"></button>
+        </div>
+      </div>
+
+      <div class="howto" id="howto">把蘋果拖到五線譜上對應的<b>位置</b>　·　也可以先點蘋果、再點譜</div>
+
+      <div class="ui range-pill" id="rangePill"></div>
+
+      <div class="ui staff-toolbar">
+        <button class="chip" id="btnMelody" type="button"><span class="play-tri"></span>聽旋律</button>
+        <button class="chip" id="btnShowAns" type="button">顯示答案</button>
+        <button class="chip" id="btnFinish" type="button">提早結束</button>
+      </div>
+    </section>
+
+    <div id="toast"></div>
+  </div>
+</div>
+
+<script src="src/js/clefdata.js"></script>
+<script src="src/js/theory.js"></script>
+<script src="src/js/zyfont.js"></script>
+<script src="src/js/core.js"></script>
+<script src="src/js/audio.js"></script>
+<script src="src/js/home.js"></script>
+<script src="src/js/setup.js"></script>
+<script src="src/js/game.js"></script>
+<script src="src/js/main.js"></script>
+</body>
+</html>
